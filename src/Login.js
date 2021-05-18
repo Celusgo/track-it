@@ -1,18 +1,43 @@
 import styled from 'styled-components';
-import React from 'react';
+import { useState } from 'react';
 import LoginLogo from './logo.png';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 export default function Login(){
+    let history = useHistory();
+
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const body = {
+        email,
+        password
+    }
+
+    function sendLogin(){
+        const login = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', body)
+        login.then(()=>{history.push("/hoje")});
+
+        login.catch((error)=>{history.push("/");
+        if(error.response.status === 422){
+            alert("Por favor, coloque um e-mail com formatação correta.")
+        } else if (error.response.status === 401) {
+            alert("Usuário e/ou senha inválidos!");
+        } else{
+            alert("Ocorreu um erro!");
+        }});
+        
+    }
+
     return(
         <>
             <Container>
                 <img src={LoginLogo} alt = "TrackIt"/>
             </Container>
-            <Input type='text' placeholder="email"></Input>
-            <Input type='password' placeholder="senha"></Input>
-            <Button>Cadastrar</Button>
+            <Input type='text' placeholder="email" onChange={e => setEmail(e.target.value)}></Input>
+            <Input type='password' placeholder="senha" onChange={e => setPassword(e.target.value)}></Input>
+            <Button onClick={()=>sendLogin()}>Entrar</Button>
             <Create><Link to="/cadastro"><p>Não tem uma conta? Cadestre-se!</p></Link></Create>
         </>
     )
@@ -22,7 +47,7 @@ const Container = styled.div`
     width: 100%;
     margin-top:68px;
     display:flex;
-    aligin-items:center;
+    align-items:center;
     justify-content:center;
     margin-bottom:33px;
 
@@ -77,10 +102,10 @@ const Create = styled.div`
     margin-top:25px;
 
     p{
-        font-family:'Lexend Deca'
+        font-family:'Lexend Deca';
         font-weight:400;
         font-size:14px;
         color:#52b6ff;
+        text-decoration-line:underline;
     }
-
-`
+`;
