@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import React, { useContext } from 'react';
+import UserContext from './contexts/UserContext';
 import LoginLogo from './logo.png';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
@@ -11,16 +13,21 @@ export default function Login(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isEnabled, setIsEnabled] = useState(false);
+    const {setUser} = useContext(UserContext);
 
     const body = {
         email,
         password
     }
 
+
     function sendLogin(){
         setIsEnabled(true);
         const login = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', body)
-        login.then(()=>{history.push("/hoje")});
+        login.then((resposta)=>{
+            setUser({id: resposta.data.id, name: resposta.data.name, token: resposta.data.token, image: resposta.data.image})
+            history.push("/hoje")
+        });
 
         login.catch((error)=>{history.push("/");
         if(error.response.status === 422){
