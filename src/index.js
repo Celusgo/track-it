@@ -6,6 +6,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './Login';
 import Cadastro from './Cadastro';
 import Hoje from './Hoje';
+import Habitos from './Habitos';
 
 
 function App(){
@@ -24,6 +25,9 @@ function App(){
                     </Route>
                     <Route path="/hoje" exact>
                         <Hoje/>
+                    </Route>
+                    <Route path="/habitos" exact>
+                        <Habitos/>
                     </Route>
                 </Switch>
             </BrowserRouter>
