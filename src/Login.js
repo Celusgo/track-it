@@ -3,12 +3,14 @@ import { useState } from 'react';
 import LoginLogo from './logo.png';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Loader from "react-loader-spinner";
 
 export default function Login(){
     let history = useHistory();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [isEnabled, setIsEnabled] = useState(false);
 
     const body = {
         email,
@@ -16,18 +18,28 @@ export default function Login(){
     }
 
     function sendLogin(){
+        setIsEnabled(true);
         const login = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', body)
         login.then(()=>{history.push("/hoje")});
 
         login.catch((error)=>{history.push("/");
         if(error.response.status === 422){
             alert("Por favor, coloque um e-mail com formatação correta.")
+            setIsEnabled(false);
+            setPassword("");
+            setEmail("");
         } else if (error.response.status === 401) {
             alert("Usuário e/ou senha inválidos!");
+            setIsEnabled(false);
+            setPassword("");
+            setEmail("");
         } else{
             alert("Ocorreu um erro!");
+            setIsEnabled(false);
+            setPassword("");
+            setEmail("");
         }});
-        
+
     }
 
     return(
@@ -35,9 +47,9 @@ export default function Login(){
             <Container>
                 <img src={LoginLogo} alt = "TrackIt"/>
             </Container>
-            <Input type='text' placeholder="email" onChange={e => setEmail(e.target.value)}></Input>
-            <Input type='password' placeholder="senha" onChange={e => setPassword(e.target.value)}></Input>
-            <Button onClick={()=>sendLogin()}>Entrar</Button>
+            <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled = {isEnabled} ></Input>
+            <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled = {isEnabled}></Input>
+            <Button onClick={()=>sendLogin()}>{isEnabled?<Loader type="ThreeDots" color="#00BFFF" height={80} width={80}/>:"Entrar"}</Button>
             <Create><Link to="/cadastro"><p>Não tem uma conta? Cadestre-se!</p></Link></Create>
         </>
     )
