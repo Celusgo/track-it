@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserContext from './contexts/UserContext';
 import Top from './Top';
 import Bottom from './Bottom';
 import Loader from "react-loader-spinner";
+import axios from 'axios';
 
 export default function Habitos(){
     const {user} = useContext(UserContext);
@@ -11,22 +12,42 @@ export default function Habitos(){
     const [createHabit, setCreateHabit] = React.useState(false);
     const [isEnabled, setIsEnabled] = React.useState(false);
     const [weekday, setWeekday ]= React.useState([
-        {weekday: "D", id: 1, highlight: false},
-        {weekday: "S", id: 2, highlight: false},
-        {weekday: "T", id: 3, highlight: false}, 
+        {weekday: "D", id: 0, highlight: false},
+        {weekday: "S", id: 1, highlight: false},
+        {weekday: "T", id: 2, highlight: false}, 
+        {weekday: "Q", id: 3, highlight: false},
         {weekday: "Q", id: 4, highlight: false},
-        {weekday: "Q", id: 5, highlight: false},
-        {weekday: "S", id: 6, highlight: false},
-        {weekday: "S", id: 7, highlight: false}
+        {weekday: "S", id: 5, highlight: false},
+        {weekday: "S", id: 6, highlight: false}
     ])
+    const [myHabits, setMyHabits] = React.useState([]);
     
-    //const config = {
-        //headers: {"Authorization": `Bearer ${user.token}`}
-    //}
+
+    useEffect(() => {
+        const config = {
+            headers: {"Authorization": `Bearer ${user.token}`}
+        }
+		const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+
+		request.then(response => {
+			setMyHabits(response.data);
+            console.log(response.data);
+		});
+
+        request.catch(() => alert("Ocorreu um erro, tente novamente!"))
+	}, []);
+
+
     function toggleDay(each){
-        each.highlight = !(each.highlight);
-        setWeekday([...weekday]);
-        console.log(weekday);
+        if(each.highlight === true){
+            each.highlight = false;
+            setWeekday([...weekday]);
+            console.log(weekday);
+        } else if(each.highlight === false){
+            each.highlight = true
+            setWeekday([...weekday]);
+            console.log(weekday);
+        }
     }
     
 
@@ -39,18 +60,58 @@ export default function Habitos(){
             </MyHabits>
 
             <CreateHabitHolder show = {createHabit}>
-                <HabitInput type="text" disabled={isEnabled} placeholder="nome do hábito" onChange={e => setHabitName(e.target.value)}></HabitInput>
+                <HabitInput type="text" disabled={isEnabled} value = {habitName} placeholder="nome do hábito" onChange={e => setHabitName(e.target.value)}></HabitInput>
                 <WeekdayHolder>
                     {weekday.map((each,i)=><Weekday key = {i} disabled = {isEnabled} clicked = {each.highlight} onClick = {()=>toggleDay(each)}>
                         {each.weekday}
                     </Weekday>)}
                 </WeekdayHolder>
                 <ButtonsHolder>
-                    <CancelButton disabled = {isEnabled} onClick = {()=>setCreateHabit(false)}>Cancelar</CancelButton>
-                    <SaveButton disabled = {isEnabled} opacity = {isEnabled} onClick = {()=>setIsEnabled(true)}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={40} width={40}/>:"Salvar"}</SaveButton>
+                    <CancelButton disabled = {isEnabled} onClick = {()=>{setCreateHabit(false); setHabitName(""); setWeekday([
+                    {weekday: "D", id: 0, highlight: false},
+                    {weekday: "S", id: 1, highlight: false},
+                    {weekday: "T", id: 2, highlight: false}, 
+                    {weekday: "Q", id: 3, highlight: false},
+                    {weekday: "Q", id: 4, highlight: false},
+                    {weekday: "S", id: 5, highlight: false},
+                    {weekday: "S", id: 6, highlight: false}
+                ])}}>Cancelar</CancelButton>
+                    <SaveButton disabled = {isEnabled} opacityWhenDisabled = {isEnabled} onClick = {()=>{setIsEnabled(true);
+                    const config = {
+                        headers: {"Authorization": `Bearer ${user.token}`}
+                    }
+                    const body = {name: habitName,
+                        days:weekday.filter((each)=> each.highlight === true).map((each)=>each.id)
+                    }
+                    const send = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", body, config);
+                    send.then((response)=>{setIsEnabled(false);
+                        setHabitName("");
+                        setCreateHabit(false);
+                        setWeekday([
+                            {weekday: "D", id: 0, highlight: false},
+                            {weekday: "S", id: 1, highlight: false},
+                            {weekday: "T", id: 2, highlight: false}, 
+                            {weekday: "Q", id: 3, highlight: false},
+                            {weekday: "Q", id: 4, highlight: false},
+                            {weekday: "S", id: 5, highlight: false},
+                            {weekday: "S", id: 6, highlight: false}
+                        ]);
+                        setMyHabits([...myHabits, response.data]);
+                    })
+                    send.catch(()=>{alert("Ocorreu um erro, tente novamente!"); setIsEnabled(false)}); 
+                }}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={40} width={40}/>:"Salvar"}</SaveButton>
                 </ButtonsHolder>
-
             </CreateHabitHolder>
+            <InitialMessage show = {myHabits.length === 0?true:false}>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</InitialMessage>
+            {myHabits.map((each)=>
+                <DoHabit>
+                    <DoHabitName>{each.name}</DoHabitName>
+                    <WeekdayHolder>
+                        {weekday.map((each)=><Weekday>{each.weekday}</Weekday>)}
+                    </WeekdayHolder>
+                </DoHabit>
+            )}
+
 
             <Bottom/>
         </Holder>
@@ -60,11 +121,12 @@ export default function Habitos(){
 const Holder = styled.div`
     box-sizing:border-box;
     background-color:#e5e5e5;
-    height:100vh;
+    min-height:100vh;
     width:100%;
     padding-top:70px;
     padding-right:20px;
     padding-left:20px;
+    padding-bottom:120px;
 `;
 
 
@@ -100,7 +162,9 @@ const Button = styled.button`
 
 const CreateHabitHolder = styled.div`
     box-sizing:border-box;
-    padding:18px;
+    height:180px;
+    width:340px;
+    padding:9px;
     margin-top:22px;
     background-color:#ffffff;
     border-radius: 5px;
@@ -129,18 +193,19 @@ const WeekdayHolder = styled.div`
 `;
 
 const Weekday = styled.button`
+    display: flex;
     width: 30px;
     height: 30px;
     margin-right: 4px;
-    display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #D5D5D5;
-    border-radius: 5px;
     font-family: 'Lexend Deca';
     font-size: 20px;
-    color: ${props => props.clicked? "#fff": "#DBDBDB"};
-    background-color: ${props => props.clicked? "#DBDBDB": "#fff"};
+    border: 1px solid #D5D5D5;
+    border-radius: 5px;
+    color: ${props => props.clicked? "#FFFFFF": "#DBDBDB"};
+    outline:none;
+    background-color: ${props => props.clicked? "#DBDBDB": "#FFFFFF"};
 `;
 
 const ButtonsHolder = styled.div`
@@ -162,7 +227,7 @@ const SaveButton = styled.button`
     border:none;
     border-radius: 4.63636px;
     outline:none;
-    opacity: ${props => props.opacity? "0.7": "1"};
+    opacity: ${props => props.opacityWhenDisabled? "0.7": "1"};
 `
 
 const CancelButton = styled.button`
@@ -176,4 +241,32 @@ const CancelButton = styled.button`
     border-radius: 4.63636px;
     margin-left:175px;
     outline:none;
+`;
+
+const InitialMessage = styled.div`
+    width:338px;
+    height:74px;
+    font-family: 'Lexend Deca';
+    font-size:18px;
+    color:#666666;
+    margin-top:30px;
+    display: ${props => props.show? "block":"none"};
+`;
+
+const DoHabit = styled.div`
+    box-sizing:border-box;
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    width:340px;
+    height:91px;
+    border-radius:5px;
+    background-color:#FFFFFF;
+    margin-top:10px;
+`
+
+const DoHabitName = styled.div`
+    font-family: 'Lexend Deca';
+    font-size:20px;
+    color:#666666;
 `

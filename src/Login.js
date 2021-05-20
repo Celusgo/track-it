@@ -56,7 +56,7 @@ export default function Login(){
             </Container>
             <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled = {isEnabled} ></Input>
             <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled = {isEnabled}></Input>
-            <Button opacity = {isEnabled} onClick={()=>sendLogin()}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Entrar"}</Button>
+            <Button opacityWhenDisabled = {isEnabled} onClick={()=>sendLogin()}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Entrar"}</Button>
             <Create><Link to="/cadastro"><p>Não tem uma conta? Cadestre-se!</p></Link></Create>
         </>
     )
@@ -112,7 +112,7 @@ const Button = styled.button`
     margin-left:36px;
     border:none;
     outline:none;
-    opacity: ${props => props.opacity? "0.7": "1"};
+    opacity: ${props => props.opacityWhenDisabled? "0.7": "1"};
 `
 const Create = styled.div`
     display:flex;
