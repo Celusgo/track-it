@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { TrashOutline } from 'react-ionicons';
 import React, { useContext, useEffect } from 'react';
 import UserContext from './contexts/UserContext';
 import Top from './Top';
@@ -21,6 +22,8 @@ export default function Habitos(){
         {weekday: "S", id: 6, highlight: false}
     ])
     const [myHabits, setMyHabits] = React.useState([]);
+    console.log(myHabits);
+
     
 
     useEffect(() => {
@@ -31,7 +34,6 @@ export default function Habitos(){
 
 		request.then(response => {
 			setMyHabits(response.data);
-            console.log(response.data);
 		});
 
         request.catch(() => alert("Ocorreu um erro, tente novamente!"))
@@ -67,15 +69,7 @@ export default function Habitos(){
                     </Weekday>)}
                 </WeekdayHolder>
                 <ButtonsHolder>
-                    <CancelButton disabled = {isEnabled} onClick = {()=>{setCreateHabit(false); setHabitName(""); setWeekday([
-                    {weekday: "D", id: 0, highlight: false},
-                    {weekday: "S", id: 1, highlight: false},
-                    {weekday: "T", id: 2, highlight: false}, 
-                    {weekday: "Q", id: 3, highlight: false},
-                    {weekday: "Q", id: 4, highlight: false},
-                    {weekday: "S", id: 5, highlight: false},
-                    {weekday: "S", id: 6, highlight: false}
-                ])}}>Cancelar</CancelButton>
+                    <CancelButton disabled = {isEnabled} onClick = {()=>setCreateHabit(false)}>Cancelar</CancelButton>
                     <SaveButton disabled = {isEnabled} opacityWhenDisabled = {isEnabled} onClick = {()=>{setIsEnabled(true);
                     const config = {
                         headers: {"Authorization": `Bearer ${user.token}`}
@@ -103,14 +97,17 @@ export default function Habitos(){
                 </ButtonsHolder>
             </CreateHabitHolder>
             <InitialMessage show = {myHabits.length === 0?true:false}>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</InitialMessage>
-            {myHabits.map((each)=>
-                <DoHabit>
-                    <DoHabitName>{each.name}</DoHabitName>
+            {myHabits.map((m, i)=>
+                <DoHabit key = {i}>
+                    <TrashHolder>
+                        <TrashOutline/>
+                    </TrashHolder>
+                    <DoHabitName>{m.name}</DoHabitName>
                     <WeekdayHolder>
-                        {weekday.map((each)=><Weekday>{each.weekday}</Weekday>)}
+                        {weekday.map((each, i)=><Weekday key = {i} className = {m.days.includes(i)?"selected":""}>{each.weekday}</Weekday>)}
                     </WeekdayHolder>
                 </DoHabit>
-            )}
+            ).reverse()}
 
 
             <Bottom/>
@@ -169,7 +166,7 @@ const CreateHabitHolder = styled.div`
     background-color:#ffffff;
     border-radius: 5px;
     display: ${props => props.show? "block":"none"};
-`
+`;
 
 const HabitInput = styled.input`
     height:45px;
@@ -206,6 +203,10 @@ const Weekday = styled.button`
     color: ${props => props.clicked? "#FFFFFF": "#DBDBDB"};
     outline:none;
     background-color: ${props => props.clicked? "#DBDBDB": "#FFFFFF"};
+    &.selected{
+        background-color:#cfcfcf;
+        color:#FFFFFF;
+    }
 `;
 
 const ButtonsHolder = styled.div`
@@ -215,7 +216,7 @@ const ButtonsHolder = styled.div`
     margin-top:30px;
     height:35px;
     width:303px;
-`
+`;
 
 const SaveButton = styled.button`
     width: 84px;
@@ -228,7 +229,7 @@ const SaveButton = styled.button`
     border-radius: 4.63636px;
     outline:none;
     opacity: ${props => props.opacityWhenDisabled? "0.7": "1"};
-`
+`;
 
 const CancelButton = styled.button`
     width: 84px;
@@ -254,6 +255,7 @@ const InitialMessage = styled.div`
 `;
 
 const DoHabit = styled.div`
+    position:relative;
     box-sizing:border-box;
     padding:14px;
     display:flex;
@@ -263,10 +265,20 @@ const DoHabit = styled.div`
     border-radius:5px;
     background-color:#FFFFFF;
     margin-top:10px;
-`
+`;
 
 const DoHabitName = styled.div`
     font-family: 'Lexend Deca';
     font-size:20px;
     color:#666666;
+`;
+
+const TrashHolder = styled.div`
+    width:13px;
+    height:15px;
+    position:absolute;
+    right:0;
+    top:0;
+    margin-right:20px;
+    margin-top:15px;
 `

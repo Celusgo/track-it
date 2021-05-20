@@ -11,7 +11,6 @@ import Habitos from './Habitos';
 
 function App(){
     const [user, setUser] = React.useState(null);
-    console.log(user);
 
     return(
         <UserContext.Provider value = {{user, setUser}}>
