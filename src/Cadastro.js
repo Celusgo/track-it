@@ -37,7 +37,7 @@ export default function Cadastro(){
             <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled={isEnabled}></Input>
             <Input type='text' placeholder="nome" value = {name} onChange={e => setName(e.target.value)} disabled={isEnabled}></Input>
             <Input type='text' placeholder="foto" value = {picture} onChange={e => setPicture(e.target.value)} disabled={isEnabled}></Input>
-            <Button onClick={()=>sendData()}> {isEnabled?<Loader type="ThreeDots" color="#00BFFF" height={80} width={80}/>:"Cadastrar"}</Button>
+            <Button onClick={()=>sendData()} opacity = {isEnabled}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Cadastrar"}</Button>
             <Login><Link to="/"><p>Não tem uma conta? Cadestre-se!</p></Link></Login>
         </>
     )
@@ -93,6 +93,7 @@ const Button = styled.button`
     margin-left:36px;
     border:none;
     outline:none;
+    opacity: ${props => props.opacity? "0.7": "1"};
 `
 const Login = styled.div`
     display:flex;
