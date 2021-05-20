@@ -7,6 +7,7 @@ import Login from './Login';
 import Cadastro from './Cadastro';
 import Hoje from './Hoje';
 import Habitos from './Habitos';
+import Historico from './Historico';
 
 
 function App(){
@@ -27,6 +28,9 @@ function App(){
                     </Route>
                     <Route path="/habitos" exact>
                         <Habitos/>
+                    </Route>
+                    <Route path="/historico" exact>
+                        <Historico/>
                     </Route>
                 </Switch>
             </BrowserRouter>

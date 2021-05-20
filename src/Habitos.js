@@ -22,8 +22,6 @@ export default function Habitos(){
         {weekday: "S", id: 6, highlight: false}
     ])
     const [myHabits, setMyHabits] = React.useState([]);
-    console.log(myHabits);
-
     
 
     useEffect(() => {
@@ -37,18 +35,47 @@ export default function Habitos(){
 		});
 
         request.catch(() => alert("Ocorreu um erro, tente novamente!"))
-	}, []);
+	}, [user.token]);
 
 
     function toggleDay(each){
         if(each.highlight === true){
             each.highlight = false;
             setWeekday([...weekday]);
-            console.log(weekday);
         } else if(each.highlight === false){
             each.highlight = true
             setWeekday([...weekday]);
-            console.log(weekday);
+        }
+    }
+
+    function updateHabits(){
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }
+        
+        const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", config);
+        
+        request.then(response => {
+            setMyHabits(response.data);
+        });
+
+        request.catch(() => alert("Ocorreu um erro, tente novamente!"));
+    }
+
+    function deleteHabit(m){
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${user.token}`
+            }
+        }
+    
+        const confirmDeletion = window.confirm("Tem certeza que quer apagar este hábito?");
+        if(confirmDeletion){
+
+        const deleteSelected = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${m}`, config);
+        deleteSelected.then(updateHabits);   
         }
     }
     
@@ -100,7 +127,7 @@ export default function Habitos(){
             {myHabits.map((m, i)=>
                 <DoHabit key = {i}>
                     <TrashHolder>
-                        <TrashOutline/>
+                        <TrashOutline onClick = {()=>deleteHabit(m.id)}/>
                     </TrashHolder>
                     <DoHabitName>{m.name}</DoHabitName>
                     <WeekdayHolder>

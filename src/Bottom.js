@@ -40,6 +40,7 @@ const Footer = styled.div`
     width:100%;
     background-color:#FFFFFF;
     position:fixed;
+    z-index:1;
     bottom:0;
     left:0;
     padding:0px 36px;
