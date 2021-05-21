@@ -62,7 +62,7 @@ export default function Hoje(){
         }
     }
     
-    setProgressWheel(todayHabits.filter((each)=>each.done === true).length/todayHabits.length);
+    setProgressWheel(todayHabits.reduce((acc, item) => (item.done? acc + 1 : acc), 0)/todayHabits.length);
 
     return(
         <Holder>
