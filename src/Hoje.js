@@ -1,39 +1,53 @@
 import styled from 'styled-components';
-import React, { useContext } from 'react';
+import { CheckmarkOutline } from 'react-ionicons';
+import React, {useContext, useEffect} from 'react';
 import UserContext from './contexts/UserContext';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import { Link } from 'react-router-dom';
+import Top from './Top';
+import Bottom from './Bottom';
+import "dayjs/locale/pt";
+import calendar from "dayjs/plugin/calendar";
+import dayjs from "dayjs";
+import axios from 'axios';
 
 export default function Hoje(){
+    const [todayHabits, setTodayHabits] = React.useState([]);
     const {user} = useContext(UserContext);
-    const percentage = 85;
+
+    dayjs.extend(calendar);
+
+    useEffect(() => {
+        const config = {
+            headers: {"Authorization": `Bearer ${user.token}`}
+        }
+		const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
+
+		request.then(response => {
+			setTodayHabits(response.data);
+		});
+        request.catch(() => alert("Ocorreu um erro, tente novamente!"))
+	}, [user.token]);
 
     return(
         <Holder>
-            <Header>
-             <h1>TrackIt</h1>
-             <img src={user.image} alt="user"/>
-            </Header>
-             ITENS AQUI
-            <Footer>
-                <Link to="/habitos"><h1>Hábitos</h1></Link>
-                <ProgressHolder>
-                    <Link to="/hoje"><CircularProgressbar
-                    background = {true}
-                    value={percentage}
-                    backgroundPadding={6}
-                    text={`Hoje`}
-                    styles={buildStyles({
-                        pathColor: `#ffffff`,
-                        textColor: '#ffffff',
-                        trailColor: '#52b6ff',
-                        backgroundColor: '#52B6FF',
-                    })}
-                    /></Link>
-                </ProgressHolder>
-                <Link to="/historico"><h1>Histórico</h1></Link>
-            </Footer>
+            <Top/>
+             <WeekDayName><h1>{dayjs().locale("pt").format("dddd").replace("-feira", "")}, {dayjs().calendar(dayjs("2019-09-21"),{sameElse: "DD/MM"})}</h1></WeekDayName>
+             <HabitInformation>Nenhum hábito concluido ainda</HabitInformation>
+             {todayHabits.map((t, i) => 
+                <HabitsHolder key = {i}>
+                    <Task>
+                        <h1>{t.name}</h1>
+                        <p>Sequência atual: <Days state = {t.done}>{t.currentSequence} dias</Days></p>
+                        <p>Seu recorde: <Days state = {t.currentSequence === t.highestSequence}>{t.highestSequence} dias</Days></p>
+                    </Task>
+                    <Checkmark>
+                        <CheckmarkOutline
+                        color={'#fff'} 
+                        height="60px"
+                        width="60px"
+                        />
+                    </Checkmark>
+                </HabitsHolder>)}
+            <Bottom/>
         </Holder>
     )
 }
@@ -41,62 +55,69 @@ export default function Hoje(){
 const Holder = styled.div`
     box-sizing:border-box;
     background-color:#e5e5e5;
-    height:100vh;
+    min-height:100vh;
     width:100%;
     padding-top:70px;
+    padding-right:20px;
+    padding-left:20px;
+    padding-bottom:120px;
 `;
-const Header = styled.div`
+
+const WeekDayName = styled.div`
+    margin-top: 28px;
+    h1{
+        font-family:'Lexend Deca';
+        font-size:23px;
+        color:#126ba5;
+    }
+`;
+
+const HabitInformation = styled.div`
+    margin-top:2px;
+    font-family:'Lexend Deca';
+    font-size:18px;
+    color:#BABABA;
+`;
+
+const HabitsHolder = styled.div`
+    display:flex;
+    justify-content: space-between;
     box-sizing:border-box;
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    width:100%;
-    height:70px;
-    background-color:#126ba5;
-    position:fixed;
-    top:0;
-    left:0;
-    padding:0px 18px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-
-    h1{
-        font-family: 'Playball';
-        font-weight: 400;
-        font-size:39px;
-        color:#FFFFFF;
-    }
-
-    img{
-        width:51px;
-        height:51px;
-        border-radius:98.5px;
-    }
-
-`;
-
-const Footer = styled.div`
-    box-sizing: border-box;
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 70px;
-    width:100%;
+    padding:14px;
+    height:94px;
+    width:340px;
+    border-radius:5px;
     background-color:#FFFFFF;
-    position:fixed;
-    bottom:0;
-    left:0;
-    padding:0px 36px;
+    margin-top:10px;
+`
 
+const Task = styled.div`
+        font-family: 'Lexend Deca', sans-serif;
     h1{
-        font-family: 'Lexend Deca';
-        font-size:18px;
-        color:#52b6ff
+        color: #666;
+        margin-bottom: 7px;
+        font-size: 20px;
+    }
+    span, p{
+        font-size: 13px;
+        margin-bottom: 5px;
+    }
+    p{
+        color: #666;
     }
 `;
 
-const ProgressHolder = styled.div`
-    height:91px;
-    width:91px;
-    margin-bottom:45px;
+const Days = styled.span`
+        color: ${props => props.state? "#8FC549": "#666"};
 `;
 
+const Checkmark = styled.div`
+    width: 69px;
+    height: 69px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: ${props => props.state? "#8FC549": "#EBEBEB"};
+    border: 1px solid #E7E7E7;
+    border-radius: 5px;
+`;

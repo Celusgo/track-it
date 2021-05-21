@@ -73,7 +73,6 @@ export default function Habitos(){
     
         const confirmDeletion = window.confirm("Tem certeza que quer apagar este hábito?");
         if(confirmDeletion){
-
         const deleteSelected = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${m}`, config);
         deleteSelected.then(updateHabits);   
         }
