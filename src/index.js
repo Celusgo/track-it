@@ -18,25 +18,25 @@ function App(){
     return(
         <UserContext.Provider value = {{user, setUser}}>
             <ProgressWheelContext.Provider value = {{progressWheel, setProgressWheel}}>
-            <BrowserRouter>
-                <Switch>
-                    <Route path="/" exact>
-                        <Login/>
-                    </Route>
-                    <Route path="/cadastro" exact>
-                        <Cadastro/>
-                    </Route>
-                    <Route path="/hoje" exact>
-                        <Hoje/>
-                    </Route>
-                    <Route path="/habitos" exact>
-                        <Habitos/>
-                    </Route>
-                    <Route path="/historico" exact>
-                        <Historico/>
-                    </Route>
-                </Switch>
-            </BrowserRouter>
+                <BrowserRouter>
+                    <Switch>
+                        <Route path="/" exact>
+                            <Login/>
+                        </Route>
+                        <Route path="/cadastro" exact>
+                            <Cadastro/>
+                        </Route>
+                        <Route path="/hoje" exact>
+                            <Hoje/>
+                        </Route>
+                        <Route path="/habitos" exact>
+                            <Habitos/>
+                        </Route>
+                        <Route path="/historico" exact>
+                            <Historico/>
+                        </Route>
+                    </Switch>
+                </BrowserRouter>
             </ProgressWheelContext.Provider>
         </UserContext.Provider>
     )
