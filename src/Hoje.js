@@ -24,7 +24,6 @@ export default function Hoje(){
 		const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
 
 		request.then(response => {
-            console.log("Teste");
 			setTodayHabits(response.data);
             setProgressWheel(response.data.reduce((acc, item) => (item.done? acc + 1 : acc), 0)/response.data.length);
 		});
