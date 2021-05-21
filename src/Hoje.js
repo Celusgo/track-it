@@ -70,7 +70,7 @@ export default function Hoje(){
         <Holder>
             <Top/>
              <WeekDayName><h1>{dayjs().locale("pt").format("dddd").replace("-feira", "")}, {dayjs().calendar(dayjs("2019-09-21"),{sameElse: "DD/MM"})}</h1></WeekDayName>
-             <HabitInformation green = {progressWheel > 0}>{`${progressWheel === 0?'Nenhum hábito concluído ainda':Math.round(progressWheel*100) + '% dos hábitos concluídos hoje'}`}</HabitInformation>
+             <HabitInformation green = {progressWheel > 0}>{`${isNaN(progressWheel)?'Nenhum hábito concluído ainda':Math.round(progressWheel*100) + '% dos hábitos concluídos hoje'}`}</HabitInformation>
              {todayHabits.map((each, i) => 
                 <HabitsHolder key = {i}>
                     <HabitTracking>
