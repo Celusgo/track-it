@@ -24,10 +24,12 @@ export default function Hoje(){
 		const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today", config);
 
 		request.then(response => {
+            console.log("Teste");
 			setTodayHabits(response.data);
+            setProgressWheel(response.data.reduce((acc, item) => (item.done? acc + 1 : acc), 0)/response.data.length);
 		});
         request.catch(() => alert("Ocorreu um erro, tente novamente!"))
-	}, [user.token]);
+	}, [user.token, setProgressWheel]);
 
     function updateToday(){
         const config = {
@@ -40,6 +42,7 @@ export default function Hoje(){
         
         request.then(response => {
             setTodayHabits(response.data);
+            setProgressWheel(response.data.reduce((acc, item) => (item.done? acc + 1 : acc), 0)/response.data.length);
         });
 
         request.catch(() => alert("Ocorreu um erro, tente novamente!"));
@@ -62,7 +65,7 @@ export default function Hoje(){
         }
     }
     
-    setProgressWheel(todayHabits.reduce((acc, item) => (item.done? acc + 1 : acc), 0)/todayHabits.length);
+  
 
     return(
         <Holder>
