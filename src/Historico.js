@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import React from 'react';
-//import UserContext from './contexts/UserContext';
 import Top from './Top';
 import Bottom from './Bottom';
 

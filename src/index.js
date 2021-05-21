@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import UserContext from './contexts/UserContext';
+import ProgressWheelContext from './contexts/ProgressWheelContext';
 import React from 'react';
 import './css/reset.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
@@ -12,9 +13,11 @@ import Historico from './Historico';
 
 function App(){
     const [user, setUser] = React.useState(null);
+    const [progressWheel, setProgressWheel] = React.useState(null);
 
     return(
         <UserContext.Provider value = {{user, setUser}}>
+            <ProgressWheelContext.Provider value = {{progressWheel, setProgressWheel}}>
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact>
@@ -34,6 +37,7 @@ function App(){
                     </Route>
                 </Switch>
             </BrowserRouter>
+            </ProgressWheelContext.Provider>
         </UserContext.Provider>
     )
 }

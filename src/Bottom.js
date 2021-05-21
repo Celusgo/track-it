@@ -1,11 +1,13 @@
 import styled from 'styled-components';
-import React from 'react';
+import React, {useContext} from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import ProgressWheelContext from './contexts/ProgressWheelContext';
 import { Link } from 'react-router-dom';
 
 export default function Bottom(){
-    const percentage = 85;
+    const { progressWheel } = useContext(ProgressWheelContext);
+    const percentage = progressWheel;
 
     return(
      <Footer>
@@ -13,7 +15,7 @@ export default function Bottom(){
             <ProgressHolder>
                 <Link to="/hoje"><CircularProgressbar
                 background = {true}
-                value={percentage}
+                value={percentage*100}
                 backgroundPadding={6}
                 text={`Hoje`}
                 styles={buildStyles({
