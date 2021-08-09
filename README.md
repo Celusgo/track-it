@@ -33,6 +33,9 @@ The following tools and frameworks were used in the construction of the project:
 ## How to run
 
 1. Clone this repository
+```bash
+git clone https://github.com/Celusgo/track-it
+```
 2. Install dependencies
 ```bash
 npm i
