@@ -33,12 +33,14 @@ export default function Cadastro(){
             <Container>
                     <img src={LoginRegister} alt = "TrackIt"/>
             </Container>
-            <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled={isEnabled}></Input>
-            <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled={isEnabled}></Input>
-            <Input type='text' placeholder="nome" value = {name} onChange={e => setName(e.target.value)} disabled={isEnabled}></Input>
-            <Input type='text' placeholder="foto" value = {picture} onChange={e => setPicture(e.target.value)} disabled={isEnabled}></Input>
-            <Button onClick={()=>sendData()} opacityWhenDisabled = {isEnabled}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Cadastrar"}</Button>
-            <Login><Link to="/"><p>Não tem uma conta? Cadestre-se!</p></Link></Login>
+            <FormHolder>
+                <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled={isEnabled}></Input>
+                <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled={isEnabled}></Input>
+                <Input type='text' placeholder="nome" value = {name} onChange={e => setName(e.target.value)} disabled={isEnabled}></Input>
+                <Input type='text' placeholder="foto" value = {picture} onChange={e => setPicture(e.target.value)} disabled={isEnabled}></Input>
+                <Button onClick={()=>sendData()} opacityWhenDisabled = {isEnabled}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Cadastrar"}</Button>
+                <Login><Link to="/"><p>Já tem uma conta? Faça login!</p></Link></Login>
+            </FormHolder>
         </>
     )
 }
@@ -67,10 +69,8 @@ const Input = styled.input`
     width:303px;
     padding-left:11px;
     border: 1px solid #d5d5d5;
-    margin-left:36px;
-    margin-left:36px;
-    margin-bottom:6px;
     outline: none;
+    margin-bottom: 10px;
 
     ::-webkit-input-placeholder  { 
         color: #DBDBDB;
@@ -90,7 +90,6 @@ const Button = styled.button`
     border-radius:4.63636px;
     height:45px;
     width:303px;
-    margin-left:36px;
     border:none;
     outline:none;
     opacity: ${props => props.opacityWhenDisabled? "0.7": "1"};
@@ -109,4 +108,12 @@ const Login = styled.div`
         color:#52b6ff;
         text-decoration-line:underline;
     }
+`;
+
+const FormHolder = styled.div`
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin:0 auto;
 `;

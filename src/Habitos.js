@@ -34,7 +34,7 @@ export default function Habitos(){
 			setMyHabits(response.data);
 		});
 
-        request.catch(() => alert("Ocorreu um erro, tente novamente!"))
+        request.catch(() => alert("Ocorreu um erro, tente novamente!"));
 	}, [user.token]);
 
 

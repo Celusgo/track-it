@@ -54,10 +54,12 @@ export default function Login(){
             <Container>
                 <img src={LoginLogo} alt = "TrackIt"/>
             </Container>
-            <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled = {isEnabled} ></Input>
-            <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled = {isEnabled}></Input>
-            <Button opacityWhenDisabled = {isEnabled} onClick={()=>sendLogin()}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Entrar"}</Button>
-            <Create><Link to="/cadastro"><p>Não tem uma conta? Cadestre-se!</p></Link></Create>
+            <FormHolder>
+                <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled = {isEnabled} ></Input>
+                <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled = {isEnabled}></Input>
+                <Button opacityWhenDisabled = {isEnabled} onClick={()=>sendLogin()}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Entrar"}</Button>
+                <Create><Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link></Create>
+            </FormHolder>
         </>
     )
 }
@@ -86,10 +88,8 @@ const Input = styled.input`
     width:303px;
     padding-left:11px;
     border: 1px solid #d5d5d5;
-    margin-left:36px;
-    margin-left:36px;
-    margin-bottom:6px;
     outline: none;
+    margin-bottom:10px;
 
     ::-webkit-input-placeholder  { 
         color: #DBDBDB;
@@ -109,7 +109,6 @@ const Button = styled.button`
     border-radius:4.63636px;
     height:45px;
     width:303px;
-    margin-left:36px;
     border:none;
     outline:none;
     opacity: ${props => props.opacityWhenDisabled? "0.7": "1"};
@@ -128,4 +127,11 @@ const Create = styled.div`
         color:#52b6ff;
         text-decoration-line:underline;
     }
+`;
+
+const FormHolder = styled.div`
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 `;

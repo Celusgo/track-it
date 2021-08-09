@@ -142,6 +142,7 @@ const Now = styled.div`
     font-size:13px;
     color:#666666;
     p{
+        margin-left:3px;
         color: ${props => props.selected? "#8FC549": "#666666"};
     }
 `;
@@ -152,6 +153,7 @@ const Record = styled.div`
     font-size:13px;
     color:#666666;
     p{
+        margin-left:3px;
         color: ${props => props.selected? "#8FC549": "#666666"};
     }
 `;

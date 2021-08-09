@@ -13,7 +13,7 @@ import Historico from './Historico';
 
 function App(){
     const [user, setUser] = React.useState(null);
-    const [progressWheel, setProgressWheel] = React.useState(null);
+    const [progressWheel, setProgressWheel] = React.useState(0);
 
     return(
         <UserContext.Provider value = {{user, setUser}}>
