@@ -2,7 +2,7 @@
 
 An easy-to-use habits tracker. Create new habits, track your daily habits, check your percentage for each day and delete old habits.
 
-Try it out now at https://link-to-my-project-deployed.herokuapp.com
+Try it out now at https://trackit-beta.vercel.app
 
 ## About
 
