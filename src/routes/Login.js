@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import React, { useContext } from 'react';
-import UserContext from './contexts/UserContext';
-import LoginLogo from './logo.png';
+import UserContext from '../contexts/UserContext';
+import Logo from '../assets/logo.png';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
@@ -52,27 +52,28 @@ export default function Login(){
     return(
         <>
             <Container>
-                <img src={LoginLogo} alt = "TrackIt"/>
+                <img src={Logo} alt = "TrackIt"/>
+                <FormHolder>
+                    <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled = {isEnabled} ></Input>
+                    <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled = {isEnabled}></Input>
+                    <Button opacityWhenDisabled = {isEnabled} onClick={()=>sendLogin()}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Entrar"}</Button>
+                    <Create><Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link></Create>
+                </FormHolder>
             </Container>
-            <FormHolder>
-                <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled = {isEnabled} ></Input>
-                <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled = {isEnabled}></Input>
-                <Button opacityWhenDisabled = {isEnabled} onClick={()=>sendLogin()}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Entrar"}</Button>
-                <Create><Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link></Create>
-            </FormHolder>
         </>
     )
 }
 
 const Container = styled.div`
     width: 100%;
-    margin-top:68px;
+    height:100vh;
     display:flex;
+    flex-direction: column;
     align-items:center;
     justify-content:center;
-    margin-bottom:33px;
 
     img{
+        margin: 0 auto;
         width:180px;
         height:180px;
     }

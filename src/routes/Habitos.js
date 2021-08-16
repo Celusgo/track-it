@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { TrashOutline } from 'react-ionicons';
 import React, { useContext, useEffect } from 'react';
-import UserContext from './contexts/UserContext';
-import Top from './Top';
-import Bottom from './Bottom';
+import UserContext from '../contexts/UserContext';
+import Top from '../components/Top';
+import Bottom from '../components/Bottom';
 import Loader from "react-loader-spinner";
 import axios from 'axios';
 

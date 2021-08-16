@@ -4,11 +4,11 @@ import ProgressWheelContext from './contexts/ProgressWheelContext';
 import React from 'react';
 import './css/reset.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Login from './Login';
-import Cadastro from './Cadastro';
-import Hoje from './Hoje';
-import Habitos from './Habitos';
-import Historico from './Historico';
+import Login from './routes/Login';
+import Cadastro from './routes/Cadastro';
+import Hoje from './routes/Hoje';
+import Habitos from './routes/Habitos';
+import Historico from './routes/Historico';
 
 
 function App(){

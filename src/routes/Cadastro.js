@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import LoginRegister from './logo.png';
+import Logo from '../assets/logo.png';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
@@ -31,29 +31,30 @@ export default function Cadastro(){
     return(
         <>
             <Container>
-                    <img src={LoginRegister} alt = "TrackIt"/>
+                <img src={Logo} alt = "TrackIt"/>
+                <FormHolder>
+                    <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled={isEnabled}></Input>
+                    <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled={isEnabled}></Input>
+                    <Input type='text' placeholder="nome" value = {name} onChange={e => setName(e.target.value)} disabled={isEnabled}></Input>
+                    <Input type='text' placeholder="foto" value = {picture} onChange={e => setPicture(e.target.value)} disabled={isEnabled}></Input>
+                    <Button onClick={()=>sendData()} opacityWhenDisabled = {isEnabled}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Cadastrar"}</Button>
+                    <Login><Link to="/"><p>Já tem uma conta? Faça login!</p></Link></Login>
+                </FormHolder>
             </Container>
-            <FormHolder>
-                <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled={isEnabled}></Input>
-                <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled={isEnabled}></Input>
-                <Input type='text' placeholder="nome" value = {name} onChange={e => setName(e.target.value)} disabled={isEnabled}></Input>
-                <Input type='text' placeholder="foto" value = {picture} onChange={e => setPicture(e.target.value)} disabled={isEnabled}></Input>
-                <Button onClick={()=>sendData()} opacityWhenDisabled = {isEnabled}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Cadastrar"}</Button>
-                <Login><Link to="/"><p>Já tem uma conta? Faça login!</p></Link></Login>
-            </FormHolder>
         </>
     )
 }
 
 const Container = styled.div`
     width: 100%;
-    margin-top:68px;
+    height:100vh;
     display:flex;
+    flex-direction: column;
     align-items:center;
     justify-content:center;
-    margin-bottom:33px;
 
     img{
+        margin: 0 auto;
         width:180px;
         height:180px;
     }

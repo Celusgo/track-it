@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import React, {useContext} from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import ProgressWheelContext from './contexts/ProgressWheelContext';
+import ProgressWheelContext from '../contexts/ProgressWheelContext';
 import { Link } from 'react-router-dom';
 
 export default function Bottom(){

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import React from 'react';
-import Top from './Top';
-import Bottom from './Bottom';
+import Top from '../components/Top';
+import Bottom from '../components/Bottom';
 
 export default function Historico(){
     return(

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React, { useContext } from 'react';
-import UserContext from './contexts/UserContext';
+import UserContext from '../contexts/UserContext';
 
 export default function Top(){
     const {user} = useContext(UserContext);

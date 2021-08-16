@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import { CheckmarkOutline } from 'react-ionicons';
 import React, {useContext, useEffect} from 'react';
-import UserContext from './contexts/UserContext';
-import ProgressWheelContext from './contexts/ProgressWheelContext';
-import Top from './Top';
-import Bottom from './Bottom';
+import UserContext from '../contexts/UserContext';
+import ProgressWheelContext from '../contexts/ProgressWheelContext';
+import Top from '../components/Top';
+import Bottom from '../components/Bottom';
 import "dayjs/locale/pt";
 import calendar from "dayjs/plugin/calendar";
 import dayjs from "dayjs";
