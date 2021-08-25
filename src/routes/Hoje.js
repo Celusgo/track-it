@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { CheckmarkOutline } from 'react-ionicons';
-import React, {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import UserContext from '../contexts/UserContext';
 import ProgressWheelContext from '../contexts/ProgressWheelContext';
 import Top from '../components/Top';
@@ -13,7 +13,7 @@ import axios from 'axios';
 export default function Hoje(){
     dayjs.extend(calendar);
 
-    const [todayHabits, setTodayHabits] = React.useState([]);
+    const [todayHabits, setTodayHabits] = useState([]);
     const {user} = useContext(UserContext);
     const { progressWheel, setProgressWheel } = useContext(ProgressWheelContext);
 
@@ -45,7 +45,7 @@ export default function Hoje(){
         });
 
         request.catch(() => alert("Ocorreu um erro, tente novamente!"));
-    }
+    };
 
     function manageHabits (done, id){
         const config = {
@@ -62,7 +62,7 @@ export default function Hoje(){
             request.then(updateToday);
            
         }
-    }
+    };
     
   
 

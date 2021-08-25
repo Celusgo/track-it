@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import UserContext from './contexts/UserContext';
 import ProgressWheelContext from './contexts/ProgressWheelContext';
 import React from 'react';
-import './css/reset.css';
+import GlobalStyles from "./styles/GlobalStyles";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './routes/Login';
 import Cadastro from './routes/Cadastro';
@@ -19,6 +19,7 @@ function App(){
         <UserContext.Provider value = {{user, setUser}}>
             <ProgressWheelContext.Provider value = {{progressWheel, setProgressWheel}}>
                 <BrowserRouter>
+                <GlobalStyles/>
                     <Switch>
                         <Route path="/" exact>
                             <Login/>
