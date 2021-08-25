@@ -1,6 +1,14 @@
 # Track-it
 
 An easy-to-use habits tracker. Create new habits, track your daily habits, check your percentage for each day and delete old habits.
+<br/>
+
+<div align="center">
+  <img width = 350px src="src/assets/loginandregistry.gif" />
+  <img width = 350px src="src/assets/usage.gif" />
+</div>
+
+<br/>
 
 Try it out now at https://trackit-beta.vercel.app
 
@@ -18,7 +26,7 @@ This is an web application to control your daily habits. It was designed to smal
 
 <p>
     The motivation for this project was the urge to keep track of my habits without needing to worry about them myself. This way, I could be more productive in other areas of my life.
-    In the future, I would like to add a dark theme and multi-language settings.
+    In the future, I would like to add a dark theme, multi-language settings and a history page containing your deleted habits.
 </p>
 
 ## Technologies
