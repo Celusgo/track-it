@@ -50,6 +50,7 @@ export const Button = styled.button`
     outline:none;
     opacity: ${props => props.opacityWhenDisabled? "0.7": "1"};
 `;
+
 export const Redirect = styled.div`
     display:flex;
     justify-content:center;

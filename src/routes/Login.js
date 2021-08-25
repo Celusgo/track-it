@@ -1,4 +1,4 @@
-import { Redirect, FormHolder, Button, Input, Container } from '../styles/Styles';
+import { Redirect, FormHolder, Button, Input, Container } from '../styles/SignStyles';
 import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import UserContext from '../contexts/UserContext';

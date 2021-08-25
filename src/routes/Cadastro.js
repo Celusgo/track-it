@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Redirect, FormHolder, Button, Input, Container } from '../styles/Styles';
+import { Redirect, FormHolder, Button, Input, Container } from '../styles/SignStyles';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
@@ -44,4 +44,4 @@ export default function Cadastro(){
             </Container>
         </>
     )
-}
+};

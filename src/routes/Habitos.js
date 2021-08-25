@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { TrashOutline } from "react-ionicons";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
@@ -6,6 +5,22 @@ import Top from "../components/Top";
 import Bottom from "../components/Bottom";
 import Loader from "react-loader-spinner";
 import axios from "axios";
+import {
+    Holder,
+    MyHabits,
+    Button,
+    CreateHabitHolder,
+    HabitInput,
+    WeekdayHolder,
+    Weekday,
+    ButtonsHolder,
+    SaveButton,
+    CancelButton,
+    InitialMessage,
+    DoHabit,
+    DoHabitName,
+    TrashHolder,
+  } from "../styles/HabitsStyles";
 
 export default function Habitos() {
   const { user } = useContext(UserContext);
@@ -103,7 +118,7 @@ export default function Habitos() {
           placeholder="nome do hábito"
           onChange={(e) => setHabitName(e.target.value)}
         />
-        
+
         <WeekdayHolder>
           {weekday.map((each, i) => (
             <Weekday
@@ -164,10 +179,11 @@ export default function Habitos() {
               });
             }}
           >
-            {isEnabled
-            ? <Loader type="ThreeDots" color="#FFFFFF" height={40} width={40} />
-            : "Salvar"
-            }
+            {isEnabled ? (
+              <Loader type="ThreeDots" color="#FFFFFF" height={40} width={40} />
+            ) : (
+              "Salvar"
+            )}
           </SaveButton>
         </ButtonsHolder>
       </CreateHabitHolder>
@@ -200,171 +216,4 @@ export default function Habitos() {
       <Bottom />
     </Holder>
   );
-}
-
-const Holder = styled.div`
-  box-sizing: border-box;
-  background-color: #e5e5e5;
-  min-height: 100vh;
-  width: 100%;
-  padding-top: 70px;
-  padding-right: 20px;
-  padding-left: 20px;
-  padding-bottom: 120px;
-`;
-
-const MyHabits = styled.div`
-  box-sizing: border-box;
-  width: 100%;
-  margin-top: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  h1 {
-    font-family: "Lexend Deca";
-    font-size: 23px;
-    color: #126ba5;
-  }
-`;
-
-const Button = styled.button`
-  display: flex;
-  width: 40px;
-  height: 35px;
-  background-color: #52b6ff;
-  border-radius: 4.63636px;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  font-size: 27px;
-  font-family: "Lexend Deca";
-  text-align: center;
-  justify-content: center;
-`;
-
-const CreateHabitHolder = styled.div`
-  box-sizing: border-box;
-  height: 180px;
-  width: 340px;
-  padding: 9px;
-  margin-top: 22px;
-  background-color: #ffffff;
-  border-radius: 5px;
-  display: ${(props) => (props.show ? "block" : "none")};
-`;
-
-const HabitInput = styled.input`
-  height: 45px;
-  width: 303px;
-  padding-left: 11px;
-  border: 1px solid #d4d4d4;
-  border-radius: 5px;
-  font-family: "Lexend Deca", sans-serif;
-  font-size: 20px;
-  outline: none;
-  color: #666666;
-  ::-webkit-input-placeholder {
-    color: #dbdbdb;
-  }
-`;
-
-const WeekdayHolder = styled.div`
-  height: 30px;
-  display: flex;
-  margin-top: 10px;
-`;
-
-const Weekday = styled.button`
-  display: flex;
-  width: 30px;
-  height: 30px;
-  margin-right: 4px;
-  justify-content: center;
-  align-items: center;
-  font-family: "Lexend Deca";
-  font-size: 20px;
-  border: 1px solid #d5d5d5;
-  border-radius: 5px;
-  color: ${(props) => (props.clicked ? "#FFFFFF" : "#DBDBDB")};
-  outline: none;
-  background-color: ${(props) => (props.clicked ? "#DBDBDB" : "#FFFFFF")};
-  &.selected {
-    background-color: #cfcfcf;
-    color: #ffffff;
-  }
-`;
-
-const ButtonsHolder = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  margin-top: 30px;
-  height: 35px;
-  width: 303px;
-`;
-
-const SaveButton = styled.button`
-  width: 84px;
-  height: 35px;
-  background-color: #52b6ff;
-  font-family: "Lexend Deca";
-  font-size: 16px;
-  color: #ffffff;
-  border: none;
-  border-radius: 4.63636px;
-  outline: none;
-  opacity: ${(props) => (props.opacityWhenDisabled ? "0.7" : "1")};
-`;
-
-const CancelButton = styled.button`
-  width: 84px;
-  height: 35px;
-  background-color: #ffffff;
-  font-family: "Lexend Deca";
-  font-size: 16px;
-  color: #52b6ff;
-  border: none;
-  border-radius: 4.63636px;
-  margin-left: 175px;
-  outline: none;
-`;
-
-const InitialMessage = styled.div`
-  width: 338px;
-  height: 74px;
-  font-family: "Lexend Deca";
-  font-size: 18px;
-  color: #666666;
-  margin-top: 30px;
-  display: ${(props) => (props.show ? "block" : "none")};
-`;
-
-const DoHabit = styled.div`
-  position: relative;
-  box-sizing: border-box;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  width: 340px;
-  height: 91px;
-  border-radius: 5px;
-  background-color: #ffffff;
-  margin-top: 10px;
-`;
-
-const DoHabitName = styled.div`
-  font-family: "Lexend Deca";
-  font-size: 20px;
-  color: #666666;
-`;
-
-const TrashHolder = styled.div`
-  width: 13px;
-  height: 15px;
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin-right: 20px;
-  margin-top: 15px;
-`;
+};
