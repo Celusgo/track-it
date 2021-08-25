@@ -18,6 +18,7 @@ This is an web application to control your daily habits with the following featu
 
 <p>
     The motivation for this project was the urge to keep track of my habits without needing to worry about them myself. This way, I could be more productive in other areas of my life.
+    In the future, I would like to add a dark theme and multi-language settings.
 </p>
 
 ## Technologies
