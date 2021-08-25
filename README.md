@@ -6,7 +6,7 @@ Try it out now at https://trackit-beta.vercel.app
 
 ## About
 
-This is an web application to control your daily habits with the following features:
+This is an web application to control your daily habits. It was designed to smaller screens (such as cellphones) but it works fine on bigger screens as well. Below are the implemented features:
 
 - Sign Up
 - Login
