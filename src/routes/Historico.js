@@ -6,13 +6,13 @@ export default function Historico() {
   return (
     <Holder>
       <Top />
+      <Bottom />
       <History>
         <h1>Histórico</h1>
       </History>
       <HabitsHistory>
         <h1>Em breve você poderá ver o histórico dos seus hábitos aqui!</h1>
       </HabitsHistory>
-      <Bottom />
     </Holder>
   );
 };

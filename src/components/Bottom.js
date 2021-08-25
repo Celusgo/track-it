@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 export default function Bottom(){
     const { progressWheel } = useContext(ProgressWheelContext);
-    const percentage = progressWheel;
 
     return(
      <Footer>
@@ -15,7 +14,7 @@ export default function Bottom(){
             <ProgressHolder>
                 <Link to="/hoje"><CircularProgressbar
                 background = {true}
-                value={percentage*100}
+                value={isNaN(progressWheel)? 0: progressWheel*100}
                 backgroundPadding={6}
                 text={`Hoje`}
                 styles={buildStyles({
@@ -29,9 +28,7 @@ export default function Bottom(){
         <Link to="/historico"><h1>Histórico</h1></Link>
     </Footer>
     )
-
-
-}
+};
 
 const Footer = styled.div`
     box-sizing: border-box;

@@ -105,6 +105,7 @@ export default function Habitos() {
   return (
     <Holder>
       <Top />
+      <Bottom />
       <MyHabits>
         <h1>Meus hábitos</h1>
         <Button onClick={() => setCreateHabit(!createHabit)}>+</Button>
@@ -212,8 +213,6 @@ export default function Habitos() {
           </DoHabit>
         ))
         .reverse()}
-
-      <Bottom />
     </Holder>
   );
 };

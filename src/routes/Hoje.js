@@ -93,6 +93,7 @@ export default function Hoje() {
   return (
     <Holder>
       <Top />
+      <Bottom />
       <WeekDayName>
         <h1>
           {dayjs().locale("pt").format("dddd").replace("-feira", "")},{" "}
@@ -128,7 +129,6 @@ export default function Hoje() {
           </CheckmarkHolder>
         </HabitsHolder>
       ))}
-      <Bottom />
     </Holder>
   );
 };
