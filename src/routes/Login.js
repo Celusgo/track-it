@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import { useState } from 'react';
-import React, { useContext } from 'react';
-import UserContext from '../contexts/UserContext';
-import Logo from '../assets/logo.png';
+import { Redirect, FormHolder, Button, Input, Container } from '../components/Styles';
+import { useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import UserContext from '../contexts/UserContext';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
+import Logo from '../assets/logo.png';
+
 
 export default function Login(){
     let history = useHistory();
@@ -21,7 +21,8 @@ export default function Login(){
     }
 
 
-    function sendLogin(){
+    function sendLogin(e){
+        e.preventDefault();
         setIsEnabled(true);
         const login = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login', body)
         login.then((resposta)=>{
@@ -53,86 +54,13 @@ export default function Login(){
         <>
             <Container>
                 <img src={Logo} alt = "TrackIt"/>
-                <FormHolder>
+                <FormHolder onSubmit={sendLogin}>
                     <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled = {isEnabled} ></Input>
                     <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled = {isEnabled}></Input>
-                    <Button opacityWhenDisabled = {isEnabled} onClick={()=>sendLogin()}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Entrar"}</Button>
-                    <Create><Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link></Create>
+                    <Button type="submit" opacityWhenDisabled = {isEnabled}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Entrar"}</Button>
+                    <Redirect><Link to="/cadastro"><p>Não tem uma conta? Cadastre-se!</p></Link></Redirect>
                 </FormHolder>
             </Container>
         </>
     )
-}
-
-const Container = styled.div`
-    width: 100%;
-    height:100vh;
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content:center;
-
-    img{
-        margin: 0 auto;
-        width:180px;
-        height:180px;
-    }
-`;
-
-const Input = styled.input`
-    font-family:'Lexend Deca';
-    box-sizing:border-box;
-    font-weight:400;
-    font-size:20px;
-    border-radius:5px;
-    height:45px;
-    width:303px;
-    padding-left:11px;
-    border: 1px solid #d5d5d5;
-    outline: none;
-    margin-bottom:10px;
-
-    ::-webkit-input-placeholder  { 
-        color: #DBDBDB;
-    }
-`;
-
-const Button = styled.button`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#FFFFFF;
-    font-family:'Lexend Deca';
-    font-size:21px;
-    box-sizing:border-box;
-    font-weight:400;
-    background-color:#52b6ff;
-    border-radius:4.63636px;
-    height:45px;
-    width:303px;
-    border:none;
-    outline:none;
-    opacity: ${props => props.opacityWhenDisabled? "0.7": "1"};
-`
-const Create = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:17px;
-    margin-top:25px;
-
-    p{
-        font-family:'Lexend Deca';
-        font-weight:400;
-        font-size:14px;
-        color:#52b6ff;
-        text-decoration-line:underline;
-    }
-`;
-
-const FormHolder = styled.div`
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-`;
+};

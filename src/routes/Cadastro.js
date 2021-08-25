@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import Logo from '../assets/logo.png';
+import { Redirect, FormHolder, Button, Input, Container } from '../components/Styles';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Loader from "react-loader-spinner";
+import Logo from '../assets/logo.png';
 
 export default function Cadastro(){
     let history = useHistory();
@@ -21,7 +21,8 @@ export default function Cadastro(){
        password
    }
 
-   function sendData(){
+   function sendData(e){
+       e.preventDefault();
        setIsEnabled(true);
        const send = axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up', body);
        send.then(()=>{history.push("/"); alert("Conta criada com sucesso!")});
@@ -32,89 +33,15 @@ export default function Cadastro(){
         <>
             <Container>
                 <img src={Logo} alt = "TrackIt"/>
-                <FormHolder>
+                <FormHolder onSubmit={sendData}>
                     <Input type='text' placeholder="email" value = {email} onChange={e => setEmail(e.target.value)} disabled={isEnabled}></Input>
                     <Input type='password' placeholder="senha" value = {password} onChange={e => setPassword(e.target.value)} disabled={isEnabled}></Input>
                     <Input type='text' placeholder="nome" value = {name} onChange={e => setName(e.target.value)} disabled={isEnabled}></Input>
                     <Input type='text' placeholder="foto" value = {picture} onChange={e => setPicture(e.target.value)} disabled={isEnabled}></Input>
-                    <Button onClick={()=>sendData()} opacityWhenDisabled = {isEnabled}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Cadastrar"}</Button>
-                    <Login><Link to="/"><p>Já tem uma conta? Faça login!</p></Link></Login>
+                    <Button type="submit" opacityWhenDisabled = {isEnabled}>{isEnabled?<Loader type="ThreeDots" color="#FFFFFF" height={80} width={80}/>:"Cadastrar"}</Button>
+                    <Redirect><Link to="/"><p>Já tem uma conta? Faça login!</p></Link></Redirect>
                 </FormHolder>
             </Container>
         </>
     )
 }
-
-const Container = styled.div`
-    width: 100%;
-    height:100vh;
-    display:flex;
-    flex-direction: column;
-    align-items:center;
-    justify-content:center;
-
-    img{
-        margin: 0 auto;
-        width:180px;
-        height:180px;
-    }
-`;
-
-const Input = styled.input`
-    font-family:'Lexend Deca';
-    box-sizing:border-box;
-    font-weight:400;
-    font-size:20px;
-    border-radius:5px;
-    height:45px;
-    width:303px;
-    padding-left:11px;
-    border: 1px solid #d5d5d5;
-    outline: none;
-    margin-bottom: 10px;
-
-    ::-webkit-input-placeholder  { 
-        color: #DBDBDB;
-    }
-`;
-
-const Button = styled.button`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#FFFFFF;
-    font-family:'Lexend Deca';
-    font-size:21px;
-    box-sizing:border-box;
-    font-weight:400;
-    background-color:#52b6ff;
-    border-radius:4.63636px;
-    height:45px;
-    width:303px;
-    border:none;
-    outline:none;
-    opacity: ${props => props.opacityWhenDisabled? "0.7": "1"};
-`
-const Login = styled.div`
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:17px;
-    margin-top:25px;
-
-    p{
-        font-family:'Lexend Deca';
-        font-weight:400;
-        font-size:14px;
-        color:#52b6ff;
-        text-decoration-line:underline;
-    }
-`;
-
-const FormHolder = styled.div`
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin:0 auto;
-`;
